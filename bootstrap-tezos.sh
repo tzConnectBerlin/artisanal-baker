@@ -114,7 +114,6 @@ if [ ! -z $SNAPSHOT ]; then
         SNAPSHOT=mainnet.importme
 	./tezos-node config init --network=mainnet
     elif [ $SNAPSHOT == 'carthagenet' ]; then
-
 	wget https://snaps.tulip.tools/carthagenet_2020-07-22_08:00.full -O carthagenet.importme
 	SNAPSHOT=carthagenet.importme
 	./tezos-node config init --network=carthagenet

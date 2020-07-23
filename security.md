@@ -296,3 +296,5 @@ Advantages
 
 Disadvantages
     - Not as secure
+
+- Magic bytes args: --magic-bytes 0x01.0x02
