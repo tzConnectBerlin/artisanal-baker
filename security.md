@@ -297,4 +297,24 @@ Advantages
 Disadvantages
     - Not as secure
 
-- Magic bytes args: --magic-bytes 0x01,0x02
+
+- Magic bytes args: --magic-bytes 0x01.0x02
+
+```bash
+newby@ledgerless:~/tezos-latest-release$ ./tezos-client transfer 0.00004 from ledgerless to tmp2 --dry-run
+Warning:
+
+                 This is NOT the Tezos Mainnet.
+
+     The node you are connecting to claims to be running on the
+               Tezos Alphanet DEVELOPMENT NETWORK.
+          Do NOT use your fundraiser keys on this network.
+          Alphanet is a testing network, with free tokens.
+
+Node is bootstrapped, ready for injecting operations.
+Estimated gas: 10207 units (will add 100 for safety)
+Estimated storage: no bytes added
+magic byte 0x03 not allowed
+Fatal error:
+  transfer simulation failed
+```
