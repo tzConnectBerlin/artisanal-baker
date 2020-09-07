@@ -12,12 +12,12 @@ set -e # halt on error
 
 # Set the TEZOS_USER variable if empty
 if [ -z $TEZOS_USER ]; then
-    export TEZOS_BRANCH=$USER
+    export TEZOS_USER=$USER
 fi
 
 export TEZOS_PATH=`pwd`
 
-git submodule init
+git submodule update
 cd tezos-systemd-scripts
 sh ./install.sh
 sudo cp converted/* /etc/systemd/system
