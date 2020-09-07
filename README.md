@@ -22,5 +22,5 @@ Automates compiling a node. From the comments:
 ## [Security document](security.md)
 Techniques for baking more securely, basic information on firewall rules, documentation and example steps for setting up remote baking, with or without a hardware ledger.
 
-## [systemd setup](setup-systemd.sh)
+## [systemd setup script](setup-systemd.sh)
 Uses the [tezos-systemd-scripts project](git@github.com:tzConnectBerlin/tezos-systemd-scripts.git) to automate startup of your newly compiled node. Uses the same arguments and the bootstrap script, for your convenience.
