@@ -1,0 +1,4 @@
+[submodule "tezos-systemd-scripts"]
+	path = tezos-systemd-scripts
+	url = git@github.com:tzConnectBerlin/tezos-systemd-scripts.git
+	branch = develop
