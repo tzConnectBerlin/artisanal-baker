@@ -318,3 +318,33 @@ magic byte 0x03 not allowed
 Fatal error:
   transfer simulation failed
 ```
+## Redundant signers
+
+If, like us, your signer is not on the world's most stable internet connection, although your baker is in a well-serviced colo, you may wish to have more than one. Tezos Berlin has two ledgers, set up with the same pass phrase, running on Raspberry Pis plugged directly into our home routers. A haproxy on the baking machine load balances between the two and performs health checks; the connectivity happens using the wonderful nebula VPN.
+
+Setup is relatively simple: both Pis are set up as described above and haproxy is installed on the baking machine from the OS package manager. The haproxy config looks like this (below what is default, which was not changed):
+
+```
+frontend signer-fe
+         bind 127.0.0.1:6732
+         default_backend signer-be
+
+backend signer-be
+        balance roundrobin
+        option httpchk GET /keys/tz1hf83sreSbzof7WakXiNbjizWVHwDyHFJi
+        default-server inter 20s fall 1 rise 1
+        server jantine 172.16.0.14:6732 check
+        server john 172.16.0.11:6732 check
+
+
+frontend stats
+    bind 127.0.0.1:8404
+    stats enable
+    stats uri /stats
+    stats refresh 10s
+    stats admin if LOCALHOST
+```
+the ledger is set up like this:
+```
+./tezos-client import secret key ledger_haproxy  http://127.0.0.1:6732/tz1hf83sreSbzof7WakXiNbjizWVHwDyHFJi --force
+```

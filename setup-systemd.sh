@@ -17,7 +17,7 @@ fi
 
 export TEZOS_PATH=`pwd`
 
-git submodule update
+git submodule update --init
 cd tezos-systemd-scripts
 sh ./install.sh
 sudo cp converted/* /etc/systemd/system
