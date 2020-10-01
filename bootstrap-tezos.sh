@@ -8,7 +8,7 @@
 # - TEZOS_BRANCH - defaults to latest-release, which will build the latest mainnet.
 # - SNAPSHOT     - will populate the new node from a snapshot file. The special value 'mainnet' causes
 #                  the script to download the latest mainnet snapshot from https://github.com/Phlogi/tezos-snapshots
-#                  and install that. The special value 'carthagenet' download a recent-ish snapshot from
+#                  and install that. The special value 'carthagenet' downloads a snapshot from
 #                  https://snapshots.tulip.tools
 #
 set -e # halt on error
@@ -51,6 +51,16 @@ if [ ! -z $NEED_OPAM ]; then
 fi
 
 TEZOS_DIR="tezos-$TEZOS_BRANCH"
+
+if [ ! -z $SNAPSHOT ]; then
+    if [ -f ~/.tezos-node/lock ] || [ -d ~/.tezos-node/store ] || [ -d ~/.tezos-node/context ] || [ -f ~/.tezos-node/config.json ]; then
+        echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        echo "!!!! Existing chain data will be overridden. Interrupt within 5 seconds to abort !!!!"
+        echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        sleep 5
+        rm -rf ~/.tezos-node
+    fi
+fi
 
 if [ -d $TEZOS_DIR ]; then
     if grep 'url = https://gitlab.com/tezos/tezos.git' $TEZOS_DIR/.git/config; then
@@ -99,29 +109,22 @@ fi
 # - if set to mainnet, download the most recent mainnet snapshot from https://github.com/Phlogi/tezos-snapshots
 # - otherwise, try to restore from the file in the variable.
 if [ ! -z $SNAPSHOT ]; then
-    if [ -f ~/.tezos-node/lock ] || [ -d ~/.tezos-node/store ] || [ -d ~/.tezos-node/context ]; then
-	echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        echo "!!!! Existing chain data will be overridden. Interrupt within 5 seconds to abort !!!!"
-	echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        sleep 5
-        rm -rf ~/.tezos-node/context ~/.tezos-node/store ~/.tezos-node/lock
-    fi
     if [ $SNAPSHOT == 'mainnet' ]; then
         echo "Downloading mainnet snapshot"
         curl -s https://api.github.com/repos/Phlogi/tezos-snapshots/releases/latest | jq -r ".assets[] | select(.name) | .browser_download_url" | grep full | xargs wget -q --show-progress
         cat mainnet.full.* | xz -d -v -T0 > mainnet.importme
         rm -f mainnet.full.*
         SNAPSHOT=mainnet.importme
-	./tezos-node config init --network=mainnet
+        ./tezos-node config init --network=mainnet
     elif [ $SNAPSHOT == 'carthagenet' ]; then
-	wget https://snaps.tulip.tools/carthagenet_2020-07-22_08:00.full -O carthagenet.importme
-	SNAPSHOT=carthagenet.importme
-	./tezos-node config init --network=carthagenet
+        wget https://snaps.tulip.tools/cartha_rolling -O carthagenet.importme
+        SNAPSHOT=carthagenet.importme
+        ./tezos-node config init --network=carthagenet
     else
         SNAPSHOT=$ORIG_PWD/$SNAPSHOT
-	echo "Please enter the name of network which should be initialized:"
-	read network
-	./tezos-node config init --network=$network
+        echo "Please enter the name of network which should be initialized:"
+        read network
+        ./tezos-node config init --network=$network
     fi
 
     ./tezos-node snapshot import $SNAPSHOT
