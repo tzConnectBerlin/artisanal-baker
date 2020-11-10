@@ -1,6 +1,6 @@
 # Baking support scripts and documents.
 
-These files are intended to help getting Tezos nodes up and running quickly. They consist of
+These files are for bakers who wish to have great control over their systems. 
 
 ## [Baking document](baking.md)
 Outlines the steps necessary to set up a vanilla Ubuntu installation to run a Tezos node
