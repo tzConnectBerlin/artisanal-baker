@@ -8,7 +8,7 @@
 # - TEZOS_BRANCH - defaults to latest-release, which will build the latest mainnet.
 # - SNAPSHOT     - will populate the new node from a snapshot file. The special value 'mainnet' causes
 #                  the script to download the latest mainnet snapshot from https://github.com/Phlogi/tezos-snapshots
-#                  and install that. The special value 'carthagenet' downloads a snapshot from
+#                  and install that. The special value 'delphinet' downloads a snapshot from
 #                  https://snapshots.tulip.tools
 #
 set -e # halt on error
@@ -116,10 +116,10 @@ if [ ! -z $SNAPSHOT ]; then
         rm -f mainnet.full.*
         SNAPSHOT=mainnet.importme
         ./tezos-node config init --network=mainnet
-    elif [ $SNAPSHOT == 'carthagenet' ]; then
-        wget https://snaps.tulip.tools/cartha_rolling -O carthagenet.importme
-        SNAPSHOT=carthagenet.importme
-        ./tezos-node config init --network=carthagenet
+    elif [ $SNAPSHOT == 'delphinet' ]; then
+        wget https://delphinet.xtz-shots.io/rolling -O tezos-delphinet.rolling
+        SNAPSHOT=tezos-delphinet.rolling
+        ./tezos-node config init --network=delphinet
     else
         SNAPSHOT=$ORIG_PWD/$SNAPSHOT
         echo "Please enter the name of network which should be initialized:"

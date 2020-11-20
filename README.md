@@ -16,7 +16,7 @@ Automates compiling a node. From the comments:
 # - TEZOS_BRANCH - defaults to latest-release, which will build the latest mainnet.
 # - SNAPSHOT     - will populate the new node from a snapshot file. The special value 'mainnet' causes
 #                  the script to download the latest mainnet snapshot from https://github.com/Phlogi/tezos-snapshots
-#                  and install that. The special value 'carthagenet' download a recent-ish snapshot from
+#                  and install that. The special value 'delphinet' download a recent-ish snapshot from
 #                  https://snapshots.tulip.tools
 ```
 ## [Security document](security.md)
