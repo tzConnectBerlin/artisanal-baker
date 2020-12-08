@@ -180,7 +180,7 @@ cd tezos
 If you don't want to bake, you can vote another delegate. To vote a delegate, you should first "originate an account"; consider the implicit account called my_account2 with 6900XTZ, delegating to my_account:
 
 ```bash
-./tezos-client originate account "my_originated" for "my_account2" transferring 6900 from "my_account2" --delegate "my_account" --delegatable
+./tezos-client originate account "my_originated" transferring 6900 from "my_account2" --delegate "my_account"
 ```
 
 If you already have an originated account, you can delegate running:
