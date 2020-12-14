@@ -130,7 +130,7 @@ nohup ./tezos-node run --rpc-addr 127.0.0.1:8732
 
 ## Funding
 
-### Redeem a faucet (only for carthagenet)
+### Redeem a faucet (only for testnets)
 
 Get a faucet from https://faucet.tzalpha.net/
 
