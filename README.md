@@ -2,6 +2,9 @@
 
 These files are for bakers who wish to have great control over their systems. 
 
+## [Requirements](requirements.md)
+What you will need in order to set up a baking node
+
 ## [Baking document](baking.md)
 Outlines the steps necessary to set up a vanilla Ubuntu installation to run a Tezos node
 
